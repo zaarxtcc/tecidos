@@ -2243,6 +2243,63 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </script>
 
+<script>
 
+/* =============================================
+   ABRIR PÁGINA DO PRODUTO
+============================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const produtos = document.querySelectorAll(".mwrap");
+
+    produtos.forEach(function (produto) {
+
+        produto.style.cursor = "pointer";
+
+        produto.addEventListener("click", function (event) {
+
+            /* Não interfere se clicar em um link ou botão */
+            if (event.target.closest("a, button")) {
+                return;
+            }
+
+            const categoria = produto.getAttribute("data-c");
+
+            if (!categoria) {
+                return;
+            }
+
+            /*
+               Descobre qual número esse produto ocupa
+               dentro da própria categoria.
+            */
+
+            const produtosDaCategoria =
+                Array.from(
+                    document.querySelectorAll(
+                        '.mwrap[data-c="' + categoria + '"]'
+                    )
+                );
+
+            const numero =
+                produtosDaCategoria.indexOf(produto) + 1;
+
+            const numeroFormatado =
+                String(numero).padStart(2, "0");
+
+            const idProduto =
+                categoria + "-" + numeroFormatado;
+
+            window.location.href =
+    "produtos/produtos.html?id=" + idProduto;
+
+        });
+
+    });
+
+});
+
+</script>
 </body>
 </html>
